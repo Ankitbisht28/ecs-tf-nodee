@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: ap-south-1
   ECS_CLUSTER: app_cluster
-  CONTAINER_NAME: appnode/tf
+  CONTAINER_NAME: app  # Updated to match the container name in the ECS task definition
   ECS_SERVICE: app_service
   ECS_TD: .github/workflows/td.json
 
@@ -48,7 +48,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ${{ env.ECS_TD }}
-          container-name: ${{ env.CONTAINER_NAME }}
+          container-name: ${{ env.CONTAINER_NAME }}  # Updated to match the container name in the ECS task definition
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
@@ -58,4 +58,3 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: false
-
